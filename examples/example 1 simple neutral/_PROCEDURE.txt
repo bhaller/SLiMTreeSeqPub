@@ -1,0 +1,44 @@
+A simple neutral simulation on a long chromosome
+Status: finished
+
+
+PROCEDURE FOR RUNNING EXAMPLE 1:
+
+cd into the "example 1 simple neutral" directory
+
+time ../slim -t -m -s 0 "./ex1_noTS.slim"
+
+time ../slim -t -m -s 0 "./ex1_TS.slim"
+
+time python ../msp-add-mutation.py --basedir . --tree_file ex1_TS.trees --mut_rate 1e-7
+
+
+RESULTS:
+
+ex1_noTS.slim took 3m31.470s user + 0m0.793s system == 212.3 seconds, 390.781MB peak memory
+
+ex1_TS.slim took 0m3.695s user + 0m0.464s system == 4.159 seconds, 134.617MB peak memory
+
+msp-add-mutation.py took 0m0.574s + 0m0.257s == 0.831 seconds
+
+the two tree_seq steps together took 4.159 + 0.831 == 4.99 seconds
+
+
+the treeseq method took (4.99 / 212.3) * 100 == 2.35% of the time that the non-treeseq method took
+
+the treeseq method took (134.617 / 390.781) * 100 == 34.45% of the peak memory usage that the non-treeseq method took
+
+
+
+COALESCENT SIM:
+
+import msprime
+ts = msprime.simulate(sample_size=500, Ne=500, length=1e8, recombination_rate=1e-8, mutation_rate=1e-7)
+ts.dump("ex1_msprime.trees")
+
+which is now:
+
+time python ./msp_coalescent_ex1.py
+
+which takes 0m1.263s user + 0m0.150s system = 1.413 seconds
+

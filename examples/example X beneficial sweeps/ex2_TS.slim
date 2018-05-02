@@ -1,0 +1,16 @@
+initialize() {
+	initializeTreeSeq();
+	initializeMutationRate(1e-7 * 0.0001);  // beneficials only
+	initializeMutationType("m2", 0.5, "e", 0.02);
+	initializeGenomicElementType("g1", m2, 1.0);
+	initializeGenomicElement(g1, 0, 1e8-1);
+	initializeRecombinationRate(1e-8);
+}
+1 {
+	sim.addSubpop("p1", 500);
+}
+5000 late() {
+	fixed_m2 = sim.substitutions[sim.substitutions.mutationType == m2];
+	catn(fixed_m2.size() + " m2 mutations fixed");
+	sim.treeSeqOutput("./ex2_TS.trees");
+}

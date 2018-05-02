@@ -1,0 +1,36 @@
+Background selection / "dip in diversity"
+Status: finished
+
+
+PROCEDURE FOR RUNNING EXAMPLE 2:
+
+cd into the "example 2 simple neutral" directory
+
+time ../slim -t -m -s 0 "./ex2_TS.slim"
+
+
+
+RESULTS:
+
+ex2_TS.slim took 275m42.822s user + 4m35.326s system == 16818.15 seconds, 2532.19MB peak memory
+
+
+
+ANALYSIS:
+
+we want to measure the tree height at each base position, to see the effect of the background selection from the central area
+msprime docs: https://msprime.readthedocs.io/en/stable/api.html
+
+so in Python I think we want to:
+
+make a TreeSequence object
+call trees() to get a tree iterator
+iterate over the trees (SparseTree)
+for each tree note its positional start and end (.interval) and its height (.time() of .root()?) – multiple roots, it turns out
+then just plot mean height against position
+
+python ../msp-tree-heights.py --basedir . --tree_file ex2_TS.trees --logfile ex2_TS_heights.csv
+
+(0m9.596s + 0m0.240s)
+
+then use ./plot_heights.R to make the plot

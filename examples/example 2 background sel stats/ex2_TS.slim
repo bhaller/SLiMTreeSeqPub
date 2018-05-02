@@ -1,0 +1,28 @@
+initialize() {
+	defineConstant("N", 10000);  // pop size
+	defineConstant("L", 1e8);    // total chromosome length
+	defineConstant("L0", 200e3); // between genes
+	defineConstant("L1", 1e3);   // gene length
+	initializeTreeSeq();
+	initializeMutationRate(1e-7);
+	initializeRecombinationRate(1e-8, L-1);
+	initializeMutationType("m2", 0.5, "g", -(5/N), 1.0);
+	initializeGenomicElementType("g2", m2, 1.0);
+	
+	starts = seq(from=L0, to=L-(L0+L1), by=(L0+L1));
+	catn(size(starts) + " genes present.");
+	for (start in starts)
+		initializeGenomicElement(g2, start, (start+L1)-1);
+}
+1 {
+	sim.addSubpop("p1", N);
+	sim.rescheduleScriptBlock(s1, 10*N, 10*N);
+}
+1: late()
+{
+	if (sim.generation % 1000 == 0)
+		catn(sim.generation + "...");
+}
+s1 10 late() {
+	sim.treeSeqOutput("./ex3_TS.trees");
+}

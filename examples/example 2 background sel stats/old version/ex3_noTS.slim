@@ -1,0 +1,17 @@
+initialize() {
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	initializeMutationType("m2", 0.5, "g", -0.01, 1.0);
+	initializeGenomicElementType("g1", m1, 1.0);
+	initializeGenomicElementType("g2", c(m1,m2), c(1.0,0.1));
+	initializeGenomicElement(g1, 0, 4e7-1);
+	initializeGenomicElement(g2, 4e7, 6e7-1);
+	initializeGenomicElement(g1, 6e7, 1e8-1);
+	initializeRecombinationRate(1e-8);
+	initializeMutationRate(rates=c(1e-7, 1.1e-7, 1e-7), ends=c(4e7-1, 6e7-1, 1e8-1));
+}
+1 {
+	sim.addSubpop("p1", 500);
+}
+5000 late() {
+	sim.outputFull("./ex3_noTS.slimout", binary=T);
+}
