@@ -1,0 +1,21 @@
+// Initial random seed:
+3
+
+// RunInitializeCallbacks():
+Seed == 3
+L == 1e8
+OUTFILE == noTS_L=1e8_3_DUMP.slimout
+
+initializeMutationRate(1e-07);
+initializeMutationType(1, 0.5, "f", 0);
+initializeGenomicElementType(1, m1, 1);
+initializeGenomicElement(g1, 0, 99999999);
+initializeRecombinationRate(1e-08);
+
+// Starting run at generation <start>:
+1 
+
+// ********** CPU time used: 222.316
+// ********** Initial memory usage: 1171456 bytes (1144K, 1.11719MB)
+// ********** Peak memory usage: 459915264 bytes (449136K, 438.609MB)
+      222.53 real       221.78 user         0.56 sys
