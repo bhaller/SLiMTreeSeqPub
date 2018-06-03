@@ -216,12 +216,10 @@ xcuserdata
 slim
 bin
 *.trees
-*.slimout
-*.csv
-*.log
+*.slimbinary
 *.Rhistory
 .idea
-output
+
 
 ####
 # SonarCloud cruft

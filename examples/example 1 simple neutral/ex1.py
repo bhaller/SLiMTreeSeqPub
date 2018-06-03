@@ -27,7 +27,7 @@ def overlay_mutations(infile, outfile, rate, seed=1):
 
 
 # Run SLiM without tree-sequence recording: ex1_noTS.slim
-# Model results will be saved to ./ex1_noTS.slimout
+# Model results will be saved to ./ex1_noTS.slimbinary
 start = timer()
 subprocess.check_output(["../slim", "-m", "-s", "0", "./ex1_noTS.slim"])
 time_noTS = timer() - start
