@@ -219,6 +219,9 @@ bin
 *.slimout
 *.csv
 *.log
+*.Rhistory
+.idea
+output
 
 ####
 # SonarCloud cruft
