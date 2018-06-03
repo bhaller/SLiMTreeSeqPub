@@ -1,0 +1,22 @@
+// Initial random seed:
+0
+
+// RunInitializeCallbacks():
+Seed == 0
+L == 1e8
+OUTFILE == TS_L=1e8_0.trees
+
+initializeTreeSeq();
+initializeMutationRate(0);
+initializeMutationType(1, 0.5, "f", 0);
+initializeGenomicElementType(1, m1, 1);
+initializeGenomicElement(g1, 0, 99999999);
+initializeRecombinationRate(1e-08);
+
+// Starting run at generation <start>:
+1 
+
+// ********** CPU time used: 3.98283
+// ********** Initial memory usage: 1064960 bytes (1040K, 1.01562MB)
+// ********** Peak memory usage: 137424896 bytes (134204K, 131.059MB)
+        3.99 real         3.65 user         0.33 sys
