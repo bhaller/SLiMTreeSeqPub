@@ -6,9 +6,11 @@ This example runs essentially the same simulation (N=500, L=1e8, r=1e-8, mu=1e-7
 
 It times the three methods and prints timing output.  Of course 10N generations for the forward simulations is not really the same duration as the coalescent, but it is a commonly recommended practice; see the paper for discussion.
 
-To run this example, run ex1.py in Python (Python 3.4.8 was used).
+To run this example, run ex1.py in Python (Python 3.4.8 was used) from this directory:
 
-Note that the code presented for this example in our paper does not include the timing code or the current working directory cruft, for simplicity.
+python3 ./ex1.py
+
+Note that the code presented for this example in our paper does not include some extraneous cruft, such as timing code, setting the current working directory, and CSV file output, for simplicity.
 
 
 Sample results:
