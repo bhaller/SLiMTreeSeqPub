@@ -9,20 +9,10 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 def overlay_mutations(infile, outfile, rate, seed=1):
     ts = msprime.load(infile)
     rng = msprime.RandomGenerator(seed)
-    nodes = msprime.NodeTable()
-    edges = msprime.EdgeTable()
-    migrations = msprime.MigrationTable()
-    sites = msprime.SiteTable()
-    mutations = msprime.MutationTable()
-    provenances = msprime.ProvenanceTable()
-    individuals = msprime.IndividualTable()
-    populations = msprime.PopulationTable()
-    ts.dump_tables(nodes=nodes, edges=edges, migrations=migrations, sites=sites, mutations=mutations,
-                   provenances=provenances)
+    tables = ts.dump_tables()
     mutgen = msprime.MutationGenerator(rng, rate)
-    mutgen.generate(nodes, edges, sites, mutations)
-    mutated_ts = msprime.load_tables(nodes=nodes, edges=edges, sites=sites, mutations=mutations,
-                                     provenances=provenances, individuals=individuals, populations=populations)
+    mutgen.generate(tables.nodes.ll_table, tables.edges.ll_table, tables.sites.ll_table, tables.mutations.ll_table)
+    mutated_ts = msprime.load_tables(**tables.asdict())
     mutated_ts.dump(outfile)
 
 

@@ -15,14 +15,14 @@ Note that the code presented for this example in our paper does not include some
 
 Sample results:
 
-// ********** Initial memory usage: 1060864 bytes (1036K, 1.01172MB)
-// ********** Peak memory usage: 501035008 bytes (489292K, 477.824MB)
-Time for SLiM without tree-sequence recording: 216.86819804800325
+// ********** Initial memory usage: 1069056 bytes (1044K, 1.01953MB)
+// ********** Peak memory usage: 437092352 bytes (426848K, 416.844MB)
+Time for SLiM without tree-sequence recording: 227.94252689799941
 
-// ********** Initial memory usage: 1060864 bytes (1036K, 1.01172MB)
-// ********** Peak memory usage: 141217792 bytes (137908K, 134.676MB)
-Time for SLiM with tree-sequence recording: 3.8857379039982334
-Time for msprime mutation overlay: 0.18694955899263732
-Total time for SLiM + msprime: 4.072687462990871
+// ********** Initial memory usage: 1069056 bytes (1044K, 1.01953MB)
+// ********** Peak memory usage: 146796544 bytes (143356K, 139.996MB)
+Time for SLiM with tree-sequence recording: 3.9179799360008474
+Time for msprime mutation overlay: 0.20719674100109842
+Total time for SLiM + msprime: 4.125176677001946
 
-Total time for coalescent: 0.302550803986378
+Total time for coalescent: 0.3143823310001608
