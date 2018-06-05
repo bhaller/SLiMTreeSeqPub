@@ -219,7 +219,7 @@ bin
 *.slimbinary
 *.Rhistory
 .idea
-
+ex2_TS_heights.csv
 
 ####
 # SonarCloud cruft
