@@ -9,12 +9,24 @@ Note that the code presented for this example in our paper does not include some
 
 Sample results:
 
-// ********** Initial memory usage: 1114112 bytes (1088K, 1.0625MB)
-// ********** Peak memory usage: 52305920 bytes (51080K, 49.8828MB)
-Time for SLiM with tree-sequence recording: 0.4612639010010753
+// ********** Initial memory usage: 1126400 bytes (1100K, 1.07422MB)
+// ********** Peak memory usage: 55631872 bytes (54328K, 53.0547MB)
+Time for SLiM with tree-sequence recording: 0.38901265093591064
 
-Time for msprime tree-height analysis: 92.00589034800214
+Time for msprime tree-height analysis: 92.33197664003819
 
 ./ancestry.pdf
 ./ex3_TS_ancestry.csv
 
+
+The "best alternative" outlined in the paper uses recipe 13.9 to extrapolate the performance at L=1e8.  The file ex3_nonTS.slim here was used for that purpose.  The outline of the procedure:
+
+L=5e5 peak memory 1.72 GB, runtime 15:16:00 - 15:15:20 = 40 seconds
+L=1e6 peak memory 5.03 GB, runtime 15:19:55 - 15:17:39 = 136 seconds (2.92x memory, 3.4x time)
+L=2e6 peak memory 16.55 GB, runtime 15:14:25 - 15:05:33 = 8:52 = 532 seconds (3.29x memory, 3.9x time)
+
+from L=2e6 to L=1e8 is 5.64 doublings (4e6, 8e6, 1.6e7, 3.2e7, 6.4e7, then another 0.64 of a doubling)
+if we assume that each doubling of L produces a tripling in memory and 3.5x runtime (which seems conservative):
+
+estimated memory usage at L=1e8 is 490.867x the L=2e6 usage, which is 8123 GB or 8.1 TB
+estimated runtime at L=1e8 is 1170.965x the L=2e6 usage, which is 622953.4 seconds, 173 hours, or 7.2 days

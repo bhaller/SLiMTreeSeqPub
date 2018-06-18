@@ -14,7 +14,6 @@ time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
 
 # Load the .trees file and assess the true local ancestry at each base position
-# As a side effect of this analysis we write a CSV file to ./ex3_TS_ancestry.csv
 start = timer()
 
 starts, ends, subpops = [], [], []         # chromosome intervals with an ancestry proportion
