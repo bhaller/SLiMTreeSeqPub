@@ -220,6 +220,7 @@ bin
 *.Rhistory
 .idea
 ex2_TS_heights.csv
+runs
 
 ####
 # SonarCloud cruft
