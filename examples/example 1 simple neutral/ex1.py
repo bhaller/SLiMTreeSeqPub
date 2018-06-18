@@ -6,16 +6,6 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # os.chdir(examples_dir + "example 1 simple neutral")
 
 
-def overlay_mutations(infile, outfile, rate, seed=1):
-    ts = msprime.load(infile)
-    rng = msprime.RandomGenerator(seed)
-    tables = ts.dump_tables()
-    mutgen = msprime.MutationGenerator(rng, rate)
-    mutgen.generate(tables.nodes.ll_table, tables.edges.ll_table, tables.sites.ll_table, tables.mutations.ll_table)
-    mutated_ts = msprime.load_tables(**tables.asdict())
-    mutated_ts.dump(outfile)
-
-
 # Run SLiM without tree-sequence recording: ex1_noTS.slim
 # Model results will be saved to ./ex1_noTS.slimbinary
 start = timer()
@@ -33,7 +23,9 @@ time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: " + str(time_TS))
 
 start = timer()
-overlay_mutations("./ex1_TS.trees", "./ex1_TS_overlaid.trees", 1e-7)
+ts = msprime.load("./ex1_TS.trees")
+mutated = msprime.mutate(ts, rate=1e-7, random_seed=1, keep=True)
+mutated.dump("./ex1_TS_overlaid.trees")
 time_overlay = timer() - start
 print("Time for msprime mutation overlay: " + str(time_overlay))
 
