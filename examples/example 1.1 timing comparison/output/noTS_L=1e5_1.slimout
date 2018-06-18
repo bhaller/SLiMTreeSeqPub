@@ -4,7 +4,7 @@
 // RunInitializeCallbacks():
 Seed == 1
 L == 1e5
-OUTFILE == noTS_L=1e5_1_DUMP.slimout
+OUTFILE == noTS_L=1e5_1.slimbinary
 
 initializeMutationRate(1e-07);
 initializeMutationType(1, 0.5, "f", 0);
@@ -15,7 +15,7 @@ initializeRecombinationRate(1e-08);
 // Starting run at generation <start>:
 1 
 
-// ********** CPU time used: 0.228123
-// ********** Initial memory usage: 1171456 bytes (1144K, 1.11719MB)
-// ********** Peak memory usage: 4313088 bytes (4212K, 4.11328MB)
-        0.23 real         0.22 user         0.00 sys
+// ********** CPU time used: 0.129948
+// ********** Initial memory usage: 1089536 bytes (1064K, 1.03906MB)
+// ********** Peak memory usage: 4284416 bytes (4184K, 4.08594MB)
+        0.13 real         0.12 user         0.00 sys

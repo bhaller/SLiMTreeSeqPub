@@ -1,6 +1,6 @@
 This example has the code needed to run the timing comparison between SLiM without tree-sequence recording, SLiM with tree-sequence recording and mutation overlay, and the coalescent as provided by msprime.  The coalescent is run for both the full population and an n=N/100 sample.
 
-This is basically an extended version of example 1; as with example 1, N=500, r=1e-8, mu=1e-7, and the model is run for 10N generations or until coalescence.  However, here L is varied from 10^ to 10^10, and 10 replicates of each model are run with different seeds.
+This is basically an extended version of example 1; as with example 1, N=500, r=1e-8, mu=1e-7, and the model is run until coalescence (or until the mean expected generation for coalescence, in the case of the forward simulations).  L is varied from 10^5 to 10^10, and 10 replicates of each model are run with different seeds.
 
 To run this example, run run_times.R in R (R 3.5.0 used).
 

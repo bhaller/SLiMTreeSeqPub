@@ -73,20 +73,9 @@ def write_treeseq(chrom):
     logfile.write("Simulating mutations on " + treefile + "\n")
     logfile.flush()
     ts = msprime.load(treefile)
-    rng = msprime.RandomGenerator(seed)
-    nodes = msprime.NodeTable()
-    edges = msprime.EdgeTable()
-    sites = msprime.SiteTable()
-    mutations = msprime.MutationTable()
-    migrations = msprime.MigrationTable()
-    ts.dump_tables(nodes=nodes, edges=edges, migrations=migrations)
-    mutgen = msprime.MutationGenerator(rng, mut_rate)
-    mutgen.generate(nodes, edges, sites, mutations)
+    mutated_ts = msprime.mutate(ts, rate=mut_rate, random_seed=seed, keep=True)
     logfile.write("Saving to" + args.outfile[chrom] + "\n")
-    mutated_ts = msprime.load_tables(nodes=nodes, edges=edges, 
-                                     sites=sites, mutations=mutations)
     mutated_ts.dump(args.outfile[chrom])
-
     return True
 
 # logfile.write(datetime.datetime.now().strftime("%d.%b %Y %H:%M:%S:%f") + ": This log is " + args.logfile + " for PID " + str(os.getpid()) + ".\n")
