@@ -73,7 +73,8 @@ noTS_1e5 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e5") })
 noTS_1e6 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e6") })
 noTS_1e7 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e7") })
 noTS_1e8 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e8") })
-noTS_1e9 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e9") })
+noTS_1e9 <- sapply(0:4, FUN=function(rep) { run_noTS(rep, "1e9") })     # DO MORE RUNS
+noTS_1e9 <- rep(NA, 10)    # NOT YET RUN
 noTS_1e10 <- rep(NA, 10)    # estimated below, since the memory usage is too high
 
 # SLiM runs with tree-sequence recording
@@ -126,25 +127,26 @@ msp_times_se <- c(se(msp_1e5), se(msp_1e6), se(msp_1e7), se(msp_1e8), se(msp_1e9
 mspS_times_mean <- c(mean(mspS_1e5), mean(mspS_1e6), mean(mspS_1e7), mean(mspS_1e8), mean(mspS_1e9), mean(mspS_1e10))
 mspS_times_se <- c(se(mspS_1e5), se(mspS_1e6), se(mspS_1e7), se(mspS_1e8), se(mspS_1e9), se(mspS_1e10))
 
-TSslim_times_mean <- c(mean(TS_1e5), mean(TS_1e6), mean(TS_1e7), mean(TS_1e8), mean(TS_1e9), mean(TS_1e10))
+TSslim_times_mean <- c(mean(TS_1e5), mean(TS_1e6), mean(TS_1e7), mean(TS_1e8), mean(TS_1e9), mean(TS_1e10, na.rm=TRUE))
 TSslim_times_se <- c(se(TS_1e5), se(TS_1e6), se(TS_1e7), se(TS_1e8), se(TS_1e9), se(TS_1e10))
 
-TStotal_times_mean <- c(mean(TStotal_1e5), mean(TStotal_1e6), mean(TStotal_1e7), mean(TStotal_1e8), mean(TStotal_1e9), mean(TStotal_1e10))
+TStotal_times_mean <- c(mean(TStotal_1e5), mean(TStotal_1e6), mean(TStotal_1e7), mean(TStotal_1e8), mean(TStotal_1e9), mean(TStotal_1e10, na.rm=TRUE))
 TStotal_times_se <- c(se(TStotal_1e5), se(TStotal_1e6), se(TStotal_1e7), se(TStotal_1e8), se(TStotal_1e9), se(TStotal_1e10))
 
-noTS_times_mean <- c(mean(noTS_1e5), mean(noTS_1e6), mean(noTS_1e7), mean(noTS_1e8), mean(noTS_1e9), mean(noTS_1e10, na.rm=TRUE))
+noTS_times_mean <- c(mean(noTS_1e5), mean(noTS_1e6), mean(noTS_1e7), mean(noTS_1e8), mean(noTS_1e9, na.rm=TRUE), mean(noTS_1e10, na.rm=TRUE))
 noTS_times_se <- c(se(noTS_1e5), se(noTS_1e6), se(noTS_1e7), se(noTS_1e8), se(noTS_1e9), se(noTS_1e10))
+noTS_times_sd <- c(sd(noTS_1e5), sd(noTS_1e6), sd(noTS_1e7), sd(noTS_1e8), sd(noTS_1e9), sd(noTS_1e10))
 
 
 # plot; uncomment the segments() calls to see standard error bars (which are practically invisible)
 # the legend() stuff is pretty gross; adjusting the box dimensions in log coordinates...
 quartz(width=3.5, height=3.5, type="pdf", file="comparison.pdf")
 par(mar=c(3.5, 3.5, 1, 1), family="serif", mgp=c(2.1, 0.6, 0))
-plot(x=c(1,6), y=c(0.1,100000), type="n", xlab="chromosome length", ylab="time (seconds)", xaxp=c(1,6,5), yaxp=c(0.1,100000,1), xaxt="n", yaxt="n", log="y")
+plot(x=c(1,6), y=c(0.1,1e6), type="n", xlab="chromosome length", ylab="time (seconds)", xaxp=c(1,6,5), yaxp=c(0.1,1e6,1), xaxt="n", yaxt="n", log="y")
 axis(side=1, at=1:6, labels=c(expression(10^5),expression(10^6),expression(10^7),expression(10^8),expression(10^9),expression(10^10)))
-axis(side=2, at=10^(-1:5), labels=c(expression(10^-1),expression(10^0),10,expression(10^2),expression(10^3),expression(10^4),expression(10^5)))
+axis(side=2, at=10^(-1:6), labels=c(expression(10^-1),expression(10^0),10,expression(10^2),expression(10^3),expression(10^4),expression(10^5),expression(10^6)))
 
-for (base in c(0.1, 1, 10, 100, 1000, 10000, 100000))
+for (base in c(1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6))
     abline(h=base*(1:9), col=c("#AAAAAA", rep("#DDDDDD", times=8)))
 
 lines(x=1:6, y=mspS_times_mean, col="red")
@@ -152,7 +154,7 @@ points(x=1:6, y=mspS_times_mean, pch=22, cex=0.75, col="red", bg="white")
 #segments(x0=1:6, y0=mspS_times_mean + mspS_times_se, x1=1:6, y1=mspS_times_mean - mspS_times_se, col="blue")
 
 lines(x=1:6, y=msp_times_mean, col="red")
-points(x=1:6, y=msp_times_mean, pch=19, cex=0.75, col="red")
+points(x=1:6, y=msp_times_mean, pch=15, cex=0.75, col="red")
 #segments(x0=1:6, y0=msp_times_mean + msp_times_se, x1=1:6, y1=msp_times_mean - msp_times_se, col="blue")
 
 lines(x=1:6, y=TSslim_times_mean, col="chartreuse3", lty=3)
@@ -162,17 +164,19 @@ points(x=1:6, y=TStotal_times_mean, pch=19, cex=0.75, col="chartreuse3")
 #segments(x0=1:6, y0=TStotal_times_mean + TStotal_times_se, x1=1:6, y1=TStotal_times_mean - TStotal_times_se, col="red")
 
 lines(x=1:6, y=noTS_times_mean, col="cornflowerblue")
-points(x=1:6, y=noTS_times_mean, pch=19, cex=0.75, col="cornflowerblue")
+points(x=1:6, y=noTS_times_mean, pch=23, cex=0.75, col="cornflowerblue", bg="cornflowerblue")
 #segments(x0=1:6, y0=noTS_times_mean + noTS_times_se, x1=1:6, y1=noTS_times_mean - noTS_times_se, col="red")
 
 est_noTS6 <- noTS_times_mean[5] * (noTS_times_mean[5] / noTS_times_mean[4])
 lines(x=5:6, y=c(noTS_times_mean[5], est_noTS6), col="cornflowerblue", lty=3)
+points(x=6, y=est_noTS6, pch=23, cex=0.75, col="cornflowerblue", bg="white")
 
-leg <- legend(x="topleft", legend=c("SLiM (         extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,2), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pch=c(19, 19, 21, 19, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), plot=FALSE)
+leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,2), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), plot=FALSE)
 r <- leg$rect
-rect(r$left - 0.06, 10^(r$top + r$h - 1.85), r$left + r$w, 10^(r$top - 1.75), col="white")
-leg <- legend(x="topleft", legend=c("SLiM (         extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,1), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pt.bg="white", pch=c(19, 19, 21, 19, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), bty="n")
-lines(x=c(2.3, 2.6), y=c(7e4, 7e4), col="cornflowerblue", lty=3)
+rect(r$left - 0.06, 10^(r$top + r$h - 2.18), r$left + r$w, 10^(r$top - 2.0), col="white")
+leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,1), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pt.bg=c("cornflowerblue", "white", "white", "white", "white"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), bty="n")
+lines(x=c(2.3, 2.67), y=c(6.5e5, 6.5e5), col="cornflowerblue", lty=3)
+points(x=mean(c(2.3, 2.67)), y=6.5e5, pch=23, cex=0.75, col="cornflowerblue", bg="white")
 
 box()
 dev.off()
