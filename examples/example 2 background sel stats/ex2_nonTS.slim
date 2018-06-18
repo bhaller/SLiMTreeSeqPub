@@ -1,0 +1,37 @@
+// This is an adaptation of ex2_TS.slim to (a) not use tree-seq recording,
+// and (b) include neutral mutations at all the non-coding sites.  This is
+// used to find the expected time for a SLiM run that models the "dip in
+// diversity" using neutral mutations instead of the tree sequence.
+
+initialize() {
+	defineConstant("N", 10000);  // pop size
+	defineConstant("L", 1e8);    // total chromosome length
+	defineConstant("L0", 200e3); // between genes
+	defineConstant("L1", 1e3);   // gene length
+	initializeMutationRate(1e-7);
+	initializeRecombinationRate(1e-8, L-1);
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	initializeMutationType("m2", 0.5, "g", -(5/N), 1.0);
+	initializeGenomicElementType("g1", m1, 1.0);
+	initializeGenomicElementType("g2", m2, 1.0);
+	
+	ncStart = 0;
+	for (start in seq(from=L0, to=L-(L0+L1), by=(L0+L1)))
+	{
+		initializeGenomicElement(g1, ncStart, start - 1);
+		ncStart = (start+L1);
+		initializeGenomicElement(g2, start, ncStart - 1);
+	}
+	initializeGenomicElement(g1, ncStart, L-1);
+}
+1 {
+	catn("START: " + time());
+	
+	sim.addSubpop("p1", N);
+}
+1: late() {
+	catn(sim.generation + ": " + time());
+}
+100000 late() {
+	sim.simulationFinished();
+}
