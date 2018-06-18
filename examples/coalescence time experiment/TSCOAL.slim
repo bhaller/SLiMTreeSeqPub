@@ -1,0 +1,32 @@
+initialize() {
+	if (!exists("Lstr"))
+		defineConstant("Lstr", "1e5");
+	defineConstant("L", asInteger(Lstr));
+	
+	catn("L == " + Lstr);
+	catn("seed == " + getSeed());
+	
+	initializeTreeSeq(simplificationRatio=INF, checkCoalescence=T);	// never simplify automatically
+	initializeMutationRate(0);
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	initializeGenomicElementType("g1", m1, 1.0);
+	initializeGenomicElement(g1, 0, L-1);
+	initializeRecombinationRate(1e-8);
+}
+1 {
+	sim.addSubpop("p1", 500);
+}
+1: late() {
+	if (sim.generation % 100 == 0)
+		sim.treeSeqSimplify();
+	
+	if (sim.treeSeqCoalesced())
+	{
+		catn(sim.generation + ": coalescence achieved.");
+		//sim.treeSeqOutput("./output/"+OUTFILE);
+		sim.simulationFinished();
+	}
+}
+1000000 late() {
+	catn(sim.generation + ": FAILED TO COALESCE");
+}
