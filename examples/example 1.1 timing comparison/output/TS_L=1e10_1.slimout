@@ -16,7 +16,7 @@ initializeRecombinationRate(1e-08);
 // Starting run at generation <start>:
 1 
 
-// ********** CPU time used: 546.065
-// ********** Initial memory usage: 1064960 bytes (1040K, 1.01562MB)
-// ********** Peak memory usage: 8099958784 bytes (7.91012e+06K, 7724.72MB)
-      546.48 real       517.13 user        29.03 sys
+// ********** CPU time used: 1680.61
+// ********** Initial memory usage: 1073152 bytes (1048K, 1.02344MB)
+// ********** Peak memory usage: 8152272896 bytes (7.9612e+06K, 7774.61MB)
+     1682.07 real      1585.17 user        95.56 sys

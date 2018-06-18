@@ -1,4 +1,5 @@
 initialize() {
+	// print and interpret constants
 	catn("Seed == " + getSeed());
 	catn("L == " + Lstr);
 	catn("OUTFILE == " + OUTFILE);
@@ -6,6 +7,21 @@ initialize() {
 	
 	defineConstant("L", asInteger(Lstr));
 	
+	// look up the expected number of generations to coalescence
+	if (L == 1) defineConstant("END", 2054);
+	else if (L == 10) defineConstant("END", 2062);
+	else if (L == 1e2) defineConstant("END", 1928);
+	else if (L == 1e3) defineConstant("END", 1957);
+	else if (L == 1e4) defineConstant("END", 2088);
+	else if (L == 1e5) defineConstant("END", 2709);
+	else if (L == 1e6) defineConstant("END", 4743);
+	else if (L == 1e7) defineConstant("END", 7898);
+	else if (L == 1e8) defineConstant("END", 10648);
+	else if (L == 1e9) defineConstant("END", 13311);
+	else if (L == 1e10) defineConstant("END", 15771);
+	else stop("unsupported L");
+	
+	// model initialization
 	initializeMutationRate(1e-7);
 	initializeMutationType("m1", 0.5, "f", 0.0);
 	initializeGenomicElementType("g1", m1, 1.0);
@@ -15,6 +31,11 @@ initialize() {
 1 {
 	sim.addSubpop("p1", 500);
 }
-5000 late() {
-	sim.outputFull("./output/"+OUTFILE, binary=T);
+1:100000 late() {
+	// run for the mean coalescence time
+	if (sim.generation == END)
+	{
+		sim.outputFull("./output/"+OUTFILE, binary=T);
+		sim.simulationFinished();
+	}
 }
