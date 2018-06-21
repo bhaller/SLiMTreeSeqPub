@@ -1,2 +1,2 @@
 _frozen_importlib:321: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-     1552.70 real      1546.50 user         5.43 sys
+     1493.51 real      1488.49 user         4.48 sys
