@@ -9,13 +9,13 @@ Note that the code presented for this example in our paper does not include some
 
 Sample results:
 
-// ********** Initial memory usage: 1069056 bytes (1044K, 1.01953MB)
-// ********** Peak memory usage: 2680295424 bytes (2.61748e+06K, 2556.13MB)
-Time for SLiM with tree-sequence recording: 15501.216081151004
+// ********** Initial memory usage: 1073152 bytes (1048K, 1.02344MB)
+// ********** Peak memory usage: 2435244032 bytes (2.37817e+06K, 2322.43MB)
+Time for SLiM with tree-sequence recording: 15354.883134150004
 
-Time for msprime tree-height analysis: 13.722537207999267
+Time for msprime tree-height analysis: 14.31196111200552
 
-Time for tree-height post-processing: 73.73104108199914
+Time for tree-height post-processing: 71.19210627498978
 
 ./dip.pdf
 ./ex2_TS_heights.csv
