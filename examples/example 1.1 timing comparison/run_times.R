@@ -73,8 +73,7 @@ noTS_1e5 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e5") })
 noTS_1e6 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e6") })
 noTS_1e7 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e7") })
 noTS_1e8 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e8") })
-noTS_1e9 <- sapply(0:4, FUN=function(rep) { run_noTS(rep, "1e9") })     # DO MORE RUNS
-noTS_1e9 <- rep(NA, 10)    # NOT YET RUN
+noTS_1e9 <- sapply(0:9, FUN=function(rep) { run_noTS(rep, "1e9") })
 noTS_1e10 <- rep(NA, 10)    # estimated below, since the memory usage is too high
 
 # SLiM runs with tree-sequence recording
