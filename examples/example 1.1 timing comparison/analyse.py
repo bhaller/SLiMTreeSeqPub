@@ -12,8 +12,14 @@ import numpy as np
 ts = msprime.load(sys.argv[1])
 
 
+print("num_samples = ", ts.num_samples)
+print("num_nodes = ", ts.num_nodes)
+print("num_individuals = ", ts.num_individuals)
+print("num_populations = ", ts.num_populations)
 print("num_edges = ", ts.num_edges)
 print("num_trees = ", ts.num_trees)
+print("num_sites = ", ts.num_sites)
+print("num_mutations = ", ts.num_mutations)
 
 
 # count average roots per site
