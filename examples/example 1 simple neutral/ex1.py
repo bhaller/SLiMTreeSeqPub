@@ -35,7 +35,7 @@ print("Total time for SLiM + msprime: " + str(time_TS + time_overlay) + "\n")
 # Use msprime to do a plain coalescent simulation with equivalent parameters
 # Model results will be saved to ./ex1_msprime.trees
 start = timer()
-ts = msprime.simulate(sample_size=500, Ne=500, length=1e8, recombination_rate=1e-8, mutation_rate=1e-7)
+ts = msprime.simulate(sample_size=1000, Ne=500, length=1e8, recombination_rate=1e-8, mutation_rate=1e-7)
 ts.dump("./ex1_msprime.trees")
 time_coalescent = timer() - start
 print("Total time for coalescent: " + str(time_coalescent))

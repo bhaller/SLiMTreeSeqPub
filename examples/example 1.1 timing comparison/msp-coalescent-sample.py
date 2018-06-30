@@ -13,5 +13,6 @@ parser.add_argument("--rep", "-r", type=int, dest="rep",
                     help="replicate", default=0)
 args = parser.parse_args()
 
-ts = msprime.simulate(sample_size=5, Ne=500, length=float(args.Lstr), recombination_rate=1e-8, mutation_rate=1e-7)
+# note that sample_size is haploid, Ne is diploid
+ts = msprime.simulate(sample_size=10, Ne=500, length=float(args.Lstr), recombination_rate=1e-8, mutation_rate=1e-7)
 ts.dump("./output/msp_L=" + args.Lstr + "_" + str(args.rep) + "_XS.trees")

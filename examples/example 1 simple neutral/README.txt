@@ -25,4 +25,4 @@ Time for SLiM with tree-sequence recording: 4.040177150047384
 Time for msprime mutation overlay: 0.25382425903808326
 Total time for SLiM + msprime: 4.2940014090854675
 
-Total time for coalescent: 0.36040280503220856
+Total time for coalescent: 0.4288734170841053
