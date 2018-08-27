@@ -1,4 +1,4 @@
-import os, subprocess, msprime
+import os, subprocess, msprime, pyslim
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
@@ -23,7 +23,7 @@ time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: " + str(time_TS))
 
 start = timer()
-ts = msprime.load("./ex1_TS.trees")
+ts = pyslim.load("./ex1_TS.trees")
 mutated = msprime.mutate(ts, rate=1e-7, random_seed=1, keep=True)
 mutated.dump("./ex1_TS_overlaid.trees")
 time_overlay = timer() - start

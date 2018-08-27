@@ -9,11 +9,11 @@ Note that the code presented for this example in our paper does not include some
 
 Sample results:
 
-// ********** Initial memory usage: 1126400 bytes (1100K, 1.07422MB)
-// ********** Peak memory usage: 55631872 bytes (54328K, 53.0547MB)
-Time for SLiM with tree-sequence recording: 0.38901265093591064
+// ********** Initial memory usage: 1077248 bytes (1052K, 1.02734MB)
+// ********** Peak memory usage: 58306560 bytes (56940K, 55.6055MB)
+Time for SLiM with tree-sequence recording: 0.41587257297942415
 
-Time for msprime tree-height analysis: 92.33197664003819
+Time for msprime tree-height analysis: 62.39630133996252
 
 ./ancestry.pdf
 ./ex3_TS_ancestry.csv

@@ -1,4 +1,4 @@
-import os, subprocess, msprime, statistics, matplotlib.pyplot
+import os, subprocess, msprime, pyslim, statistics, matplotlib.pyplot
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
@@ -18,7 +18,7 @@ print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
 start = timer()
 
 height_for_pos = []         # heights all along the chromosome
-ts = msprime.load("./ex2_TS.trees")
+ts = pyslim.load("./ex2_TS.trees").simplify()
 for tree in ts.trees():
     mean_height = statistics.mean([tree.time(root) for root in tree.roots])
     height_for_pos += [mean_height] * int(tree.interval[1] - tree.interval[0])
@@ -51,17 +51,18 @@ time_analysis2 = timer() - start
 print("Time for tree-height post-processing: " + str(time_analysis2) + "\n")
 
 
-# Make a simple plot (the publication plot is made in plot_heights.R)
-matplotlib.pyplot.plot(distances, height_for_distance)
-matplotlib.pyplot.show()
-
-
 # Save the final heights to a CSV
 csvfile = open("./ex2_TS_heights.csv", "w")
 csvfile.write("distance, height\n")
 for d, h in zip(distances, height_for_distance):
-    csvfile.write(str(d) + ", " + str(h) + "\n")
+    a = csvfile.write(str(d) + ", " + str(h) + "\n")
+
 csvfile.close()
+
+
+# Make a simple plot (the publication plot is made in plot_heights.R)
+matplotlib.pyplot.plot(distances, height_for_distance)
+matplotlib.pyplot.show()
 
 
 

@@ -1,4 +1,4 @@
-import os, subprocess, msprime, matplotlib.pyplot
+import os, subprocess, msprime, pyslim, matplotlib.pyplot
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
@@ -17,7 +17,7 @@ print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
 start = timer()
 
 starts, ends, subpops = [], [], []         # chromosome intervals with an ancestry proportion
-ts = msprime.load("./ex3_TS.trees")
+ts = pyslim.load("./ex3_TS.trees").simplify()
 for tree in ts.trees(sample_counts=True):
     subpop_sum, subpop_weights = 0, 0
     for root in tree.roots:
@@ -44,4 +44,5 @@ csvfile = open("./ex3_TS_ancestry.csv", "w")
 csvfile.write("start, end, subpop\n")
 for s, e, p in zip(starts, ends, subpops):
     csvfile.write(str(s) + ", " + str(e) + ", " + str(p) + "\n")
+
 csvfile.close()
