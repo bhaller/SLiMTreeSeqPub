@@ -1,4 +1,6 @@
-import os, subprocess, msprime, pyslim, matplotlib.pyplot
+import os, subprocess, msprime, pyslim
+import matplotlib.pyplot as plt
+import numpy as np
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
@@ -11,38 +13,32 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 start = timer()
 subprocess.check_output(["../slim", "-m", "-s", "0", "./ex3_TS.slim"])
 time_TS = timer() - start
-print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
+print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 
 # Load the .trees file and assess the true local ancestry at each base position
+ts = pyslim.load("./ex3_TS.trees").simplify()
 start = timer()
 
-starts, ends, subpops = [], [], []         # chromosome intervals with an ancestry proportion
-ts = pyslim.load("./ex3_TS.trees").simplify()
+breaks = np.zeros(ts.num_trees)
+ancestry = np.zeros(ts.num_trees)
 for tree in ts.trees(sample_counts=True):
     subpop_sum, subpop_weights = 0, 0
     for root in tree.roots:
         leaves_count = tree.num_samples(root) - 1  # subtract one for the root, which is a sample
         subpop_sum += tree.population(root) * leaves_count
         subpop_weights += leaves_count
-    starts.append(tree.interval[0])
-    ends.append(tree.interval[1])
-    subpops.append(subpop_sum / float(subpop_weights))
+    breaks[tree.index] = tree.interval[0]
+    ancestry[tree.index] = subpop_sum / subpop_weights
 
 time_analysis = timer() - start
-print("Time for msprime tree-height analysis: " + str(time_analysis) + "\n")
-
-
-# Make a simple plot (the publication plot is made in plot_ancestry.R)
-x = [x for pair in zip(starts, ends) for x in pair]     # interleave starts and ends
-y = [x for x in subpops for _ in (0, 1)]                # duplicate subpops
-matplotlib.pyplot.plot(x, y)
-matplotlib.pyplot.show()
-
+print("Time for msprime tree-height analysis: ", time_analysis, "\n")
 
 # Save the final heights to a CSV
-csvfile = open("./ex3_TS_ancestry.csv", "w")
-csvfile.write("start, end, subpop\n")
-for s, e, p in zip(starts, ends, subpops):
-    csvfile.write(str(s) + ", " + str(e) + ", " + str(p) + "\n")
+with open("./ex3_TS_ancestry.csv", "w") as csvfile:
+    print("break, ancestry", file=csvfile)
+    for b, a in zip(breaks, ancestry):
+        print(b, a, sep=",", file=csvfile)
 
-csvfile.close()
+# Make a simple plot (the publication plot is made in plot_ancestry.R)
+plt.plot(breaks, ancestry)
+plt.show()
