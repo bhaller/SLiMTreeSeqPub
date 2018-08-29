@@ -1,5 +1,7 @@
-import os, subprocess, msprime, pyslim, matplotlib.pyplot
+import os, subprocess, statistics, msprime, pyslim, matplotlib.pyplot
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
+import matplotlib.pyplot as plt
+import numpy as np
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
 # examples_dir = "/Users/bhaller/DocumentsSynced/Research/Messer lab/Publication TreeSeq/SLiMTreeSeqPub/examples/"
@@ -11,24 +13,28 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 start = timer()
 subprocess.check_output(["../slim", "-m", "-s", "22", "./ex4_TS.slim"])
 time_TS = timer() - start
-print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
+print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 
 ts = pyslim.load("./ex4_TS_decap.trees")    # no simplify!
 
 
-# Plot tree heights before recapitation (the publication plot is made in plot_heights.R)
 def tree_heights(ts):
     ns = ts.num_samples
-    for tree in ts.trees(sample_counts=True):
-       times = [(tree.time(root) if ((tree.num_samples(root) < ns) or (len(tree.children(root)) > 1)) else tree.time(tree.children(root)[0]))
-                for root in tree.roots]
-       yield sum(times)/len(times)
-    yield sum(times)/len(times)   # repeat the last entry for plotting with step
+    heights = np.zeros(ts.num_trees + 1)
+    for tree in ts.trees():
+        real_roots = [
+            tree.children(root)[0] if len(tree.children(root)) == 1 else root
+            for root in tree.roots]
+        heights[tree.index] = statistics.mean(tree.time(root) for root in real_roots)
+    # repeat the last entry for plotting with step
+    heights[ts.num_trees] = heights[ts.num_trees - 1]
+    return heights
 
+# Plot tree heights before recapitation (the publication plot is made in plot_heights.R)
 breakpoints = list(ts.breakpoints())
-heights = list(tree_heights(ts))
-matplotlib.pyplot.step(breakpoints, heights, where='post')
-matplotlib.pyplot.show()
+heights = tree_heights(ts)
+plt.step(breakpoints, heights, where='post')
+plt.show()
 
 csvfile = open("./ex4_TS_decap_heights.csv", "w")
 csvfile.write("start,heights\n")
@@ -50,9 +56,9 @@ print("Time for msprime recapitation: " + str(time_analysis1) + "\n")
 
 # plot the tree heights after recapitation
 breakpoints = list(recap.breakpoints())
-heights = list(tree_heights(recap))
-matplotlib.pyplot.step(breakpoints, heights, where='post')
-matplotlib.pyplot.show()
+heights = tree_heights(recap)
+plt.step(breakpoints, heights, where='post')
+plt.show()
 
 csvfile = open("./ex4_TS_recap_heights.csv", "w")
 csvfile.write("start,heights\n")
