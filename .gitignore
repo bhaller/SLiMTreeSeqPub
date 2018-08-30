@@ -217,6 +217,8 @@ slim
 bin
 *.trees
 *.slimbinary
+*.newick
+*.vcf
 *.Rhistory
 .idea
 ex2_TS_heights.csv
