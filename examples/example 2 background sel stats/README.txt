@@ -13,9 +13,7 @@ Sample results:
 // ********** Peak memory usage: 2978983936 bytes (2.90916e+06K, 2840.98MB)
 Time for SLiM with tree-sequence recording: 15643.16557993897
 
-Time for msprime tree-height analysis: 10.957854020001832
-
-Time for tree-height post-processing: 42.75966394803254
+Time for tree-height processing:  12.391474489999382 
 
 ./dip.pdf
 ./ex2_TS_heights.csv

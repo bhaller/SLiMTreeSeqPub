@@ -1,6 +1,7 @@
 import os, subprocess, msprime, pyslim
 import matplotlib.pyplot as plt
 import numpy as np
+
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
 
 # the PyCharm console doesn't seem to set up the working directory where we want it; I use this to fix that problem
@@ -13,14 +14,18 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 start = timer()
 subprocess.check_output(["../slim", "-m", "-s", "0", "./ex3_TS.slim"])
 time_TS = timer() - start
-print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
+print("Time for SLiM with ancestry recording: ", time_TS, "\n")
 
-# Load the .trees file and assess the true local ancestry at each base position
+
+# Load the .trees file
 ts = pyslim.load("./ex3_TS.trees").simplify()
+
+
+# Assess the true local ancestry at each base position
 start = timer()
 
-breaks = np.zeros(ts.num_trees)
-ancestry = np.zeros(ts.num_trees)
+breaks = np.zeros(ts.num_trees + 1)
+ancestry = np.zeros(ts.num_trees + 1)
 for tree in ts.trees(sample_counts=True):
     subpop_sum, subpop_weights = 0, 0
     for root in tree.roots:
@@ -29,16 +34,21 @@ for tree in ts.trees(sample_counts=True):
         subpop_weights += leaves_count
     breaks[tree.index] = tree.interval[0]
     ancestry[tree.index] = subpop_sum / subpop_weights
+breaks[-1] = ts.sequence_length
+ancestry[-1] = ancestry[-2]
 
 time_analysis = timer() - start
-print("Time for msprime tree-height analysis: ", time_analysis, "\n")
+print("Time for msprime ancestry analysis: ", time_analysis, "\n")
+
 
 # Save the final heights to a CSV
 with open("./ex3_TS_ancestry.csv", "w") as csvfile:
-    print("break, ancestry", file=csvfile)
+    print("breaks, ancestry", file=csvfile)
     for b, a in zip(breaks, ancestry):
         print(b, a, sep=",", file=csvfile)
+
 
 # Make a simple plot (the publication plot is made in plot_ancestry.R)
 plt.plot(breaks, ancestry)
 plt.show()
+

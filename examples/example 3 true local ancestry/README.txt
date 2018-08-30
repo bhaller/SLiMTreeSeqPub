@@ -13,7 +13,7 @@ Sample results:
 // ********** Peak memory usage: 58306560 bytes (56940K, 55.6055MB)
 Time for SLiM with tree-sequence recording: 0.41587257297942415
 
-Time for msprime tree-height analysis: 62.39630133996252
+Time for msprime tree-height analysis:  62.24793075499838 
 
 ./ancestry.pdf
 ./ex3_TS_ancestry.csv
