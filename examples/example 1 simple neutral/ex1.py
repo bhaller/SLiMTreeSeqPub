@@ -31,6 +31,21 @@ print("Time for msprime mutation overlay: " + str(time_overlay))
 
 print("Total time for SLiM + msprime: " + str(time_TS + time_overlay) + "\n")
 
+# Write out the newick trees.
+with open("ex1_TS.newick", "w") as f:
+    for tree in mutated.trees():
+        # As there is no standard for newick trees with multiple roots,
+        # we just write them all on the same line. All we want to do here
+        # anyway is get a rough idea of the size of the file.
+        for root in tree.roots:
+            f.write(tree.newick(root=root))
+        f.write("\n")
+print("Newick written")
+
+# Write out the VCF
+with open("ex1_TS.vcf", "w") as f:
+    mutated.write_vcf(f)
+print("VCF written")
 
 # Use msprime to do a plain coalescent simulation with equivalent parameters
 # Model results will be saved to ./ex1_msprime.trees
@@ -39,7 +54,4 @@ ts = msprime.simulate(sample_size=1000, Ne=500, length=1e8, recombination_rate=1
 ts.dump("./ex1_msprime.trees")
 time_coalescent = timer() - start
 print("Total time for coalescent: " + str(time_coalescent))
-
-
-
 
