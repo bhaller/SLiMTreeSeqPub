@@ -1,4 +1,5 @@
-import os, subprocess, statistics, msprime, pyslim
+import os, subprocess, msprime, pyslim
+import numpy as np
 import matplotlib.pyplot as plt
 
 from timeit import default_timer as timer   # import issues with timeit.timeit() are too annoying...
@@ -19,18 +20,21 @@ print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 # Load the .trees file
 ts = pyslim.load("./ex4_TS_decap.trees")    # no simplify!
 
+def tree_heights(ts):
+    heights = np.zeros(ts.num_trees + 1)
+    for tree in ts.trees():
+        if tree.num_roots > 1:  # not fully coalesced
+            heights[tree.index] = ts.slim_generation
+        else:
+            root_children = tree.children(tree.root)
+            real_root = tree.root if len(root_children) > 1 else root_children[0]
+            heights[tree.index] = tree.time(real_root)
+    heights[-1] = heights[-2]  # repeat the last entry for plotting with step
+    return heights
 
 # Plot tree heights before recapitation (the publication plot is made in plot_heights.R)
-def tree_heights(ts):
-     ns = ts.num_samples
-     for tree in ts.trees(sample_counts=True):
-        times = [(tree.time(root) if ((tree.num_samples(root) < ns) or (len(tree.children(root)) > 1)) else tree.time(tree.children(root)[0]))
-                 for root in tree.roots]
-        yield sum(times)/len(times)
-     yield sum(times)/len(times)   # repeat the last entry for plotting with step
-
 breakpoints = list(ts.breakpoints())
-heights = list(tree_heights(ts))
+heights = tree_heights(ts)
 plt.step(breakpoints, heights, where='post')
 plt.show()
 
@@ -57,7 +61,7 @@ recap.dump("ex4_TS_recap.trees")
 
 # Plot the tree heights after recapitation
 breakpoints = list(recap.breakpoints())
-heights = list(tree_heights(recap))
+heights = tree_heights(recap)
 plt.step(breakpoints, heights, where='post')
 plt.show()
 
