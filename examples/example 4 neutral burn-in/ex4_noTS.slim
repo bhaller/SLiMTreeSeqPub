@@ -1,0 +1,20 @@
+// This script is used to estimate the time neutral burn-in would take in
+// SLiM, by taking time measurements at generation 10000 and 20000, and
+// extrapolating to 10N generations.
+initialize() {
+	initializeMutationRate(1e-7);
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	initializeGenomicElementType("g1", m1, 1);
+	initializeGenomicElement(g1, 0, 1e6 - 1);
+	initializeRecombinationRate(3e-10);
+}
+1 late() {
+	sim.addSubpop("p1", 100000);
+}
+10000 late() {
+	catn("Generation " + sim.generation + ": " + clock());
+}
+20000 late() {
+	catn("Generation " + sim.generation + ": " + clock());
+	sim.simulationFinished();
+}

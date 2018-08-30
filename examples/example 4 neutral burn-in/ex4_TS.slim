@@ -1,17 +1,25 @@
 initialize() {
-	initializeTreeSeq(simplificationRatio=200.0);
+	initializeTreeSeq(simplificationRatio=INF);
 	initializeMutationRate(0);
-	initializeMutationType("m1", 0.5, "f", 0.0);
-	initializeGenomicElementType("g1", m1, 1);
-	initializeGenomicElement(g1, 0, 1e8 - 1);
-	initializeRecombinationRate(2e-9);
+	initializeMutationType("m2", 0.5, "f", 1.0);
+	m2.convertToSubstitution = F;
+	initializeGenomicElementType("g1", m2, 1);
+	initializeGenomicElement(g1, 0, 1e6 - 1);
+	initializeRecombinationRate(3e-10);
 }
-1 {
+1 late() {
 	sim.addSubpop("p1", 100000);
 }
-1: late() {
-	p1.individuals.fitnessScaling = 1.0 / rgamma(p1.individualCount, 1.0, exp((1001.0 - sim.generation) / 500.0));
+100 late() {
+	sample(p1.genomes, 1).addNewDrawnMutation(m2, 5e5);
 }
-1000 late() {
-	sim.treeSeqOutput("./ex4_TS_decap.trees");
+100:10000 late() {
+	mut = sim.mutationsOfType(m2);
+	if (mut.size() != 1)
+		stop(sim.generation + ": LOST");
+	else if (sum(sim.mutationFrequencies(NULL, mut)) == 1.0)
+	{
+		sim.treeSeqOutput("./ex4_TS_decap.trees");
+		sim.simulationFinished();
+	}
 }

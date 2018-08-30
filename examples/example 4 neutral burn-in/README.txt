@@ -9,14 +9,23 @@ Note that the code presented for this example in our paper does not include some
 
 Sample results:
 // ********** Initial memory usage: 1077248 bytes (1052K, 1.02734MB)
-// ********** Peak memory usage: 5788991488 bytes (5.65331e+06K, 5520.81MB)
-Time for SLiM with tree-sequence recording: 381.407748172991
+// ********** Peak memory usage: 4940668928 bytes (4.82487e+06K, 4711.79MB)
+Time for SLiM with tree-sequence recording:  46.04891963400587 
 
-Time for msprime recapitation: 7.073345648008399
+Time for msprime recapitation: 0.4107658069988247
 
-Time for msprime mutation overlay: 8.72982140496606
+Time for msprime mutation overlay: 0.5757085929944878
+
+./recapitation.pdf
+./ex4_TS_decap_heights.csv
+./ex4_TS_recap_heights.csv
 
 
-Probably the best alternative to recapitation would be to use msprime to generate neutral mutations for a coalesced population, providing the initial burn-in state, and then load that into SLiM and simulate from there.  The msp_coalescent_ex4.py script runs the coalescent for that, to see how long it would take.  Its results:
+The best alternative to recapitation would be to use SLiM to run the initial burn-in state.  The ex4_noTS.slim model produces:
 
-Time for msprime coalescent: 573.4211697420105
+Generation 10000: 2628.53
+Generation 20000: 6758.25
+
+Extrapolating from this result (4129.72 seconds for 10,000 generations) to 10N (1,000,000) generations gives an estimate of 412972 total seconds (114.7 hours).  This estimate is probably quite low, since the model is nowhere near mutation-drift balance yet and is thus still slowing down.
+
+

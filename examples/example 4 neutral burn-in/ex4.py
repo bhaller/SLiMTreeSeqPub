@@ -12,7 +12,7 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # Run SLiM with tree-sequence recording: ex4_TS.slim
 # Model results will be saved to ./ex4_TS_decap.trees
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "22", "./ex4_TS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "2", "./ex4_TS.slim"])
 time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 
@@ -20,6 +20,8 @@ print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 # Load the .trees file
 ts = pyslim.load("./ex4_TS_decap.trees")    # no simplify!
 
+
+# Calculate tree heights, giving uncoalesced sites the maximum time
 def tree_heights(ts):
     heights = np.zeros(ts.num_trees + 1)
     for tree in ts.trees():
@@ -31,6 +33,7 @@ def tree_heights(ts):
             heights[tree.index] = tree.time(real_root)
     heights[-1] = heights[-2]  # repeat the last entry for plotting with step
     return heights
+
 
 # Plot tree heights before recapitation (the publication plot is made in plot_heights.R)
 breakpoints = list(ts.breakpoints())
@@ -51,12 +54,12 @@ csvfile.close()
 # Recapitate!
 start = timer()
 
-recap = ts.recapitate(recombination_rate=2e-9, Ne=100000)
+recap = ts.recapitate(recombination_rate=3e-10, Ne=100000, random_seed=1)
 
 time_analysis1 = timer() - start
 print("Time for msprime recapitation: " + str(time_analysis1) + "\n")
 
-recap.dump("ex4_TS_recap.trees")
+recap.dump("./ex4_TS_recap.trees")
 
 
 # Plot the tree heights after recapitation
@@ -83,15 +86,3 @@ mutated.dump("./ex4_TS_recap_overlaid.trees")
 
 time_overlay = timer() - start
 print("Time for msprime mutation overlay: " + str(time_overlay))
-
-
-# Alternative method: run an msprime simulation for the coalescent burn-in
-# note that sample_size is haploid, so it needs to be double Ne to produce n=Ne is diploid terms
-start = timer()
-
-ts = msprime.simulate(sample_size=200000, Ne=100000, length=1e8, recombination_rate=2e-9, mutation_rate=1e-7)
-ts.dump("ex4_msprime.trees")
-
-time_coalescent = timer() - start
-print("Time for msprime coalescent: " + str(time_coalescent))
-
