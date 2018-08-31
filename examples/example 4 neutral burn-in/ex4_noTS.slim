@@ -9,7 +9,7 @@ initialize() {
 	initializeRecombinationRate(3e-10);
 }
 1 late() {
-	sim.addSubpop("p1", 100000);
+	sim.addSubpop("p1", 1e5);
 }
 10000 late() {
 	catn("Generation " + sim.generation + ": " + clock());

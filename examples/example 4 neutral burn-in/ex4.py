@@ -54,7 +54,7 @@ csvfile.close()
 # Recapitate!
 start = timer()
 
-recap = ts.recapitate(recombination_rate=3e-10, Ne=100000, random_seed=1)
+recap = ts.recapitate(recombination_rate=3e-10, Ne=1e5, random_seed=1)
 
 time_analysis1 = timer() - start
 print("Time for msprime recapitation: " + str(time_analysis1) + "\n")
