@@ -170,10 +170,10 @@ est_noTS6 <- noTS_times_mean[5] * (noTS_times_mean[5] / noTS_times_mean[4])
 lines(x=5:6, y=c(noTS_times_mean[5], est_noTS6), col="cornflowerblue", lty=3)
 points(x=6, y=est_noTS6, pch=23, cex=0.75, col="cornflowerblue", bg="white")
 
-leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,2), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), plot=FALSE)
+leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = 2",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = 2",italic(N),"/100)"))), lty=c(1,1,3,1,2), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), plot=FALSE)
 r <- leg$rect
 rect(r$left - 0.06, 10^(r$top + r$h - 2.18), r$left + r$w, 10^(r$top - 2.0), col="white")
-leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = ",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = ",italic(N),"/100)"))), lty=c(1,1,3,1,1), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pt.bg=c("cornflowerblue", "white", "white", "white", "white"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), bty="n")
+leg <- legend(x="topleft", legend=c("SLiM (           extrapolated)", "SLiM treeSeq", "SLiM treeSeq (pre-overlay)", expression(paste("msprime coalescent (",italic(n)," = 2",italic(N),")")), expression(paste("msprime coalescent (",italic(n)," = 2",italic(N),"/100)"))), lty=c(1,1,3,1,1), col=c("cornflowerblue", "chartreuse3", "chartreuse3", "red", "red"), pt.bg=c("cornflowerblue", "white", "white", "white", "white"), pch=c(23, 19, 21, 15, 22), cex=0.6, pt.cex=0.75, bg="white", inset=c(0.04, 0.015), bty="n")
 lines(x=c(2.3, 2.67), y=c(6.5e5, 6.5e5), col="cornflowerblue", lty=3)
 points(x=mean(c(2.3, 2.67)), y=6.5e5, pch=23, cex=0.75, col="cornflowerblue", bg="white")
 
