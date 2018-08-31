@@ -8,7 +8,7 @@ examples_dir = "/Users/bhaller/DocumentsSynced/Research/Messer lab/Publication T
 os.chdir(examples_dir + "coalescence time experiment")
 
 def run_TSCOAL(Lstr, seed):
-    bytes = subprocess.check_output(["../slim", "-s", str(seed), "-d", "Lstr='" + Lstr + "'", "./TSCOAL.slim"])
+    bytes = subprocess.check_output(["../slim", "-s", str(seed), "-d", "Lstr='" + Lstr + "'", "TSCOAL.slim"])
     output = bytes.decode("utf-8")
     lines = output.splitlines()
     for line in lines:

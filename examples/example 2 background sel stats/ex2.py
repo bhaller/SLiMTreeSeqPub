@@ -12,13 +12,13 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # Run SLiM with tree-sequence recording: ex2_TS.slim
 # Model results will be saved to ./ex2_TS.trees
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "0", "./ex2_TS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "0", "ex2_TS.slim"])
 time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: " + str(time_TS) + "\n")
 
 
 # Load the .trees file
-ts = pyslim.load("./ex2_TS.trees").simplify()
+ts = pyslim.load("ex2_TS.trees").simplify()
 
 
 start = timer()
@@ -58,7 +58,7 @@ plt.show()
 
 
 # Save the final heights to a CSV
-csvfile = open("./ex2_TS_heights.csv", "w")
+csvfile = open("ex2_TS_heights.csv", "w")
 csvfile.write("distance, height\n")
 for d, h in zip(distances, height_for_distance):
     a = csvfile.write(str(d) + ", " + str(h) + "\n")

@@ -12,13 +12,13 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # Run SLiM with tree-sequence recording: ex3_TS.slim
 # Model results will be saved to ./ex3_TS.trees
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "0", "./ex3_TS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "0", "ex3_TS.slim"])
 time_TS = timer() - start
 print("Time for SLiM with ancestry recording: ", time_TS, "\n")
 
 
 # Load the .trees file
-ts = pyslim.load("./ex3_TS.trees").simplify()
+ts = pyslim.load("ex3_TS.trees").simplify()
 
 
 # Assess the true local ancestry at each base position
@@ -42,7 +42,7 @@ print("Time for msprime ancestry analysis: ", time_analysis, "\n")
 
 
 # Save the final heights to a CSV
-with open("./ex3_TS_ancestry.csv", "w") as csvfile:
+with open("ex3_TS_ancestry.csv", "w") as csvfile:
     print("breaks, ancestry", file=csvfile)
     for b, a in zip(breaks, ancestry):
         print(b, a, sep=",", file=csvfile)

@@ -12,13 +12,13 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # Run SLiM with tree-sequence recording: ex4_TS.slim
 # Model results will be saved to ./ex4_TS_decap.trees
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "2", "./ex4_TS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "2", "ex4_TS.slim"])
 time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: ", time_TS, "\n")
 
 
 # Load the .trees file
-ts = pyslim.load("./ex4_TS_decap.trees")    # no simplify!
+ts = pyslim.load("ex4_TS_decap.trees")    # no simplify!
 
 
 # Calculate tree heights, giving uncoalesced sites the maximum time
@@ -43,7 +43,7 @@ plt.show()
 
 
 # Save the heights to a CSV
-csvfile = open("./ex4_TS_decap_heights.csv", "w")
+csvfile = open("ex4_TS_decap_heights.csv", "w")
 csvfile.write("start,heights\n")
 for x in zip(breakpoints, heights):
     a = csvfile.write(",".join(map(str,x)) + "\n")
@@ -59,7 +59,7 @@ recap = ts.recapitate(recombination_rate=3e-10, Ne=100000, random_seed=1)
 time_analysis1 = timer() - start
 print("Time for msprime recapitation: " + str(time_analysis1) + "\n")
 
-recap.dump("./ex4_TS_recap.trees")
+recap.dump("ex4_TS_recap.trees")
 
 
 # Plot the tree heights after recapitation
@@ -70,7 +70,7 @@ plt.show()
 
 
 # Save the heights to a CSV
-csvfile = open("./ex4_TS_recap_heights.csv", "w")
+csvfile = open("ex4_TS_recap_heights.csv", "w")
 csvfile.write("start,heights\n")
 for x in zip(breakpoints, heights):
     a = csvfile.write(",".join(map(str,x)) + "\n")
@@ -82,7 +82,7 @@ csvfile.close()
 start = timer()
 
 mutated = msprime.mutate(recap, rate=1e-7, random_seed=1, keep=True)
-mutated.dump("./ex4_TS_recap_overlaid.trees")
+mutated.dump("ex4_TS_recap_overlaid.trees")
 
 time_overlay = timer() - start
 print("Time for msprime mutation overlay: " + str(time_overlay))

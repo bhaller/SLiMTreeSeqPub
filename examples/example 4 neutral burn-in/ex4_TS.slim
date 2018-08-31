@@ -19,7 +19,7 @@ initialize() {
 		stop(sim.generation + ": LOST");
 	else if (sum(sim.mutationFrequencies(NULL, mut)) == 1.0)
 	{
-		sim.treeSeqOutput("./ex4_TS_decap.trees");
+		sim.treeSeqOutput("ex4_TS_decap.trees");
 		sim.simulationFinished();
 	}
 }

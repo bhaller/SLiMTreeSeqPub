@@ -9,7 +9,7 @@ from timeit import default_timer as timer   # import issues with timeit.timeit()
 # Run SLiM without tree-sequence recording: ex1_noTS.slim
 # Model results will be saved to ./ex1_noTS.slimbinary
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "0", "./ex1_noTS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "0", "ex1_noTS.slim"])
 time_noTS = timer() - start
 print("Time for SLiM without tree-sequence recording: " + str(time_noTS) + "\n")
 
@@ -18,14 +18,14 @@ print("Time for SLiM without tree-sequence recording: " + str(time_noTS) + "\n")
 # Model results will be saved to ./ex1_TS.trees
 # Then overlay neutral mutations onto ./ex1_TS.trees with msprime and output to ./ex1_TS_overlaid.trees
 start = timer()
-subprocess.check_output(["../slim", "-m", "-s", "0", "./ex1_TS.slim"])
+subprocess.check_output(["../slim", "-m", "-s", "0", "ex1_TS.slim"])
 time_TS = timer() - start
 print("Time for SLiM with tree-sequence recording: " + str(time_TS))
 
 start = timer()
-ts = pyslim.load("./ex1_TS.trees")
+ts = pyslim.load("ex1_TS.trees")
 mutated = msprime.mutate(ts, rate=1e-7, random_seed=1, keep=True)
-mutated.dump("./ex1_TS_overlaid.trees")
+mutated.dump("ex1_TS_overlaid.trees")
 time_overlay = timer() - start
 print("Time for msprime mutation overlay: " + str(time_overlay))
 
@@ -51,7 +51,7 @@ print("VCF written")
 # Model results will be saved to ./ex1_msprime.trees
 start = timer()
 ts = msprime.simulate(sample_size=1000, Ne=500, length=1e8, recombination_rate=1e-8, mutation_rate=1e-7)
-ts.dump("./ex1_msprime.trees")
+ts.dump("ex1_msprime.trees")
 time_coalescent = timer() - start
 print("Total time for coalescent: " + str(time_coalescent))
 
