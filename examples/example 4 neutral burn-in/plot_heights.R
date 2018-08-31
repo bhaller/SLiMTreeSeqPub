@@ -14,9 +14,10 @@ y <- h_recap$height ^ 0.33
 xr <- range(x)
 yr <- c(1, 100)
 
-quartz(width=5.5, height=2.5, type="pdf", file="recapitation.pdf")
+quartz(width=5.5, height=2.75, type="pdf", file="recapitation.pdf")
 par(mar=c(3.5, 3.5, 1, 1), family="serif", mgp=c(2.1, 0.6, 0))
-plot(x=xr, y=yr, type="n", xlab="chromosome position", ylab=expression("mean tree height" ^ 0.33), xaxp=c(xr,1), yaxp=c(yr,1))
+plot(x=xr, y=yr, type="n", xlab="chromosome position", ylab="mean tree height (generations)", xaxp=c(xr,1), yaxp=c(yr,1), yaxt="n")
+axis(side=2, at=c(1, 1e4^0.33, 1e5^0.33, 1e6^0.33), labels=c("1", "1e4", "1e5", "1e6"))
 lines(x=h_decap$start, y=h_decap$height^0.33, type="s", col="red", lwd=2.0)
 lines(x=x, y=y, type="s", lwd=1.0)
 box()
